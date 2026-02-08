@@ -15,3 +15,11 @@ class FeatureDataset(Dataset):
         x = torch.from_numpy(self.X[idx])
         y = torch.tensor(int(self.y[idx]), dtype=torch.long)
         return x, y
+
+
+def get_video_id(fname):
+    base = str(fname).split('/')[-1]
+    base = base.replace('.jpg','').replace('.png','')
+    if "_frame" in base:
+        return base.rsplit("_frame", 1)[0]
+    return base
