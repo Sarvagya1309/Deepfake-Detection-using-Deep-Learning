@@ -1,4 +1,4 @@
-# models/resnet50_backbone.py
+
 import torch
 from torchvision.models import resnet50
 
