@@ -1,1 +1,14 @@
+torch
+torchvision
+timm
+scikit-learn
+matplotlib
+pandas
+numpy
+opencv-python-headless
+insightface==0.7.3
+onnxruntime-gpu
+tqdm
+seaborn
+Pillow
 
