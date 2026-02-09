@@ -1,1 +1,102 @@
+# ===============================
+# Deepfake Detection Configuration
+# ===============================
+
+project:
+  name: "Deepfake Detection with Temporal Attention and EWC"
+  description: "ResNet50 + MF-TARB + MLP with Continual Learning"
+  version: "1.0"
+
+# -------------------------------
+# Paths (NO datasets in repo)
+# -------------------------------
+paths:
+  input_videos: "/content/deepfake-input-video"
+  extracted_frames: "/content/deepfake-frames/150_frames"
+  feature_csv: "/content/celeb-df-150-frames-tarb-features/celeb_df_tarb_features.csv"
+  results_dir: "./results"
+
+# -------------------------------
+# Dataset & preprocessing
+# -------------------------------
+data:
+  frame_size: [224, 224]
+  frames_per_video: 150
+  train_split: 0.70
+  val_split: 0.15
+  test_split: 0.15
+  num_workers: 2
+  shuffle_train: true
+
+# -------------------------------
+# Feature extraction (Backbone + TARB)
+# -------------------------------
+feature_extraction:
+  backbone: "resnet50"
+  pretrained: true
+  feature_dim: 2048
+
+  tarb:
+    enabled: true
+    num_past_frames: 5
+    reduction_dim: 256
+    aggregation: "temporal_delta_mean"
+
+# -------------------------------
+# Classifier (MLP)
+# -------------------------------
+model:
+  type: "MLP"
+  hidden_dims: [512, 256]
+  dropout: 0.45
+  batch_norm: true
+  num_classes: 2
+
+# -------------------------------
+# Training configuration
+# -------------------------------
+training:
+  epochs_phase1: 20
+  epochs_phase2: 10
+  batch_size_train: 128
+  batch_size_eval: 256
+  optimizer: "AdamW"
+  learning_rate_phase1: 1e-4
+  learning_rate_phase2: 5e-5
+  weight_decay: 1e-4
+  early_stopping_patience: 5
+  gradient_clip: 1.0
+
+  regularization:
+    mixup_alpha: 0.2
+    gaussian_noise_std: 0.02
+
+# -------------------------------
+# Continual Learning (EWC)
+# -------------------------------
+ewc:
+  enabled: true
+  lambda: 0.4
+  fisher_sample_size: 500
+
+# -------------------------------
+# Evaluation
+# -------------------------------
+evaluation:
+  tune_threshold: true
+  threshold_search_range: [0.05, 0.95]
+  threshold_step: 0.01
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - auc
+
+# -------------------------------
+# Reproducibility
+# -------------------------------
+reproducibility:
+  seed: 42
+  deterministic: true
 
