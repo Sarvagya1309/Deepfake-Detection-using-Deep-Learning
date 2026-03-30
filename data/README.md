@@ -2,7 +2,7 @@
 
 - FaceForensics++
 - Celeb-DF
-- DFDC
+- Deepfake Detection(DFD)
 
 ⚠️ Datasets are not included due to size and licensing restrictions.
 
