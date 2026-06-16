@@ -12,7 +12,8 @@ combined with temporal attention and continual learning.
 
 ## 📂 Datasets
 - FaceForensics++ (FF++)
-- DFDC
+- Deepfake Detection
+- Celeb-df(v2)
 
 ⚠️ Datasets are not included due to size and licensing constraints.
 
